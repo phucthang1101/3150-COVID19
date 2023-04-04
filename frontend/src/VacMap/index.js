@@ -18,9 +18,9 @@ function VacMap() {
   const [map, setMap] = useState(null);
 
   useEffect(() => {
-    const res = fetch(`/api/provinces`)
+    const res = fetch(`/api/reports`)
       .then(res => res.json())
-      .then(res => { console.log("first"); drawMap(res.data) })
+      .then(res => { drawMap(res.data) })
   }, []);
 
   function drawMap(data) {

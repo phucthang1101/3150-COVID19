@@ -20,9 +20,9 @@ function Map() {
   const [map, setMap] = useState(null);
 
   useEffect(() => {
-    const res = fetch(`/api/provinces`)
+    const res = fetch(`/api/reports`)
       .then(res => res.json())
-      .then(res => { console.log("first"); drawMap(res.data) })
+      .then(res => { drawMap(res.data) })
   }, []);
 
   function drawMap(data) {
@@ -192,11 +192,7 @@ function Map() {
         }
 
         let feature = e.features[0];
-        const coordinates = e.features[0].geometry.coordinates.slice();
-        console.log(e.features[0])
-        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-          coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-          }
+        
         // Create tooltip node
         const tooltipNode = document.createElement('div');
         ReactDOM.render(<Tooltip feature={feature} />, tooltipNode);
