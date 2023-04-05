@@ -11,18 +11,16 @@ mapboxgl.accessToken = 'pk.eyJ1IjoibWFwc3RlcnRlY2giLCJhIjoiY2s4M2U4eGJmMWJlejNsb
 
 function Map() {
   const mapContainerRef = useRef(null);
-  //const popup = useRef(null);
   const tooltipRef = useRef(new mapboxgl.Popup({
     closeButton: false,
     closeOnClick: false,
     offset: 15
   }));
-  const [map, setMap] = useState(null);
 
   useEffect(() => {
     const res = fetch(`/api/reports`)
       .then(res => res.json())
-      .then(res => { drawMap(res.data) })
+      .then(res => {console.log({res}); drawMap(res.data) })
   }, []);
 
   function drawMap(data) {
@@ -42,7 +40,7 @@ function Map() {
 
   function drawProvinces(data, map) {
     fetch('assets/data/provinces.json').then(resp => resp.json()).then(response => {
-
+      
       var centroidGeoJSON = {
         type: "FeatureCollection",
         features: []
@@ -50,10 +48,10 @@ function Map() {
       var fillRange = [];
 
       response.features.forEach((feature) => {
+        //console.log(first)
         feature.id = feature.properties.cartodb_id;
-        let provinceData = data.filter(item => item.province === feature.properties.abbreviation)[0];
+        let provinceData = data.filter(item => item.PROVID.trim() === feature.properties.abbreviation)[0];
         feature.properties.province_cases_total = provinceData.total_cases;
-        // feature.properties.province_cases_per_population = provinceData.total_cases / (feature.properties.population / 100000);
         feature.properties.province_cases_per_population = (provinceData.total_cases - provinceData.total_fatalities - provinceData.total_recoveries) / (feature.properties.population / 100000);
         feature.properties.province_cases_active = provinceData.total_cases - provinceData.total_fatalities - provinceData.total_recoveries;
         feature.properties.province_deaths_total = provinceData.total_fatalities;
@@ -230,22 +228,5 @@ function Map() {
     </>
   );
 }
-
-// const map_attributes = {
-//   mapStyle: insetMapStyle,
-//   interactiveLayerIds: ["provinces-fill"],
-//   mapboxAccessToken: MAPBOX_TOKEN,
-//   scrollZoom: false,
-//   doubleClickZoom: false,
-//   dragPan: false,
-//   touchZoom: false,
-//   touchRotate: false,
-//   keyboard: false,
-//   initialViewState: {
-//     latitude: 28.0,
-//     longitude: 84.2,
-//     zoom: 4.9
-//   }
-// };
 
 export default Map;

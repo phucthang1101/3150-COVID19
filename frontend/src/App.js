@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/styles';
 import { Card, CardContent, CardHeader, Grid } from '@material-ui/core';
 import VacMap from './VacMap';
 import Table from './Table';
+import Form from './Form';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -49,8 +50,8 @@ function App() {
             </div>
           </div>
         </div>
-
         <Table/>
+        <Form/>
       </div>
       {/* <Grid container rowSpacing={1}>
         <Grid item xs={6}>

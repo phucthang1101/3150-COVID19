@@ -49,7 +49,7 @@ function VacMap() {
 
       response.features.forEach((feature) => {
         feature.id = feature.properties.cartodb_id;
-        let provinceData = data.filter(item => item.province === feature.properties.abbreviation)[0];
+        let provinceData = data.filter(item => item.PROVID.trim() === feature.properties.abbreviation)[0];
         feature.properties.province_vaccinations_total = provinceData.total_vaccinations;
         feature.properties.province_vaccinations_per_population = (Math.floor(((provinceData.total_vaccinations) / (feature.properties.population / 100000)) * 10) / 10);
 

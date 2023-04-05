@@ -6,7 +6,6 @@ const Table = () => {
   const [provinces, setProvinces] = useState(null)
   useEffect(() => {
     fetchSummaryAndPronvinces().then(([reports, provinces]) => {
-      console.log({reports})
       setReports(reports.data)
       setProvinces(provinces)
     }).catch(error => {
@@ -19,7 +18,6 @@ const Table = () => {
       fetch('/api/reports'),
       fetch('/api/provinces')
     ]);
-    console.log({reportsResponse})
     const reports = await reportsResponse.json();
     const provinces = await provincesResponse.json();
     return [reports, provinces];
@@ -130,7 +128,6 @@ const Table = () => {
   const renderTableBody = (reports, provinces) => {
     
     return reports.map((item) => {
-      console.log({item})
       let casesPer100000 = Math.floor(((100000 * item.total_cases) / provinceProperties(item.PROVID).population) * 100) / 100;
       let fatalitiesPer100000 = Math.floor(((100000 * item.total_fatalities) / provinceProperties(item.PROVID).population) * 100) / 100;
       let hospitalizationsPer100000 = Math.floor(((100000 * item.total_hospitalizations) / provinceProperties(item.PROVID).population) * 100) / 100;
@@ -144,7 +141,6 @@ const Table = () => {
       provinceData = provinceData.length ? provinceData[0] : {};
       let updatedAt = provinceData.updated_at ? moment(provinceData.updated_at).format("dddd, MMMM Do YYYY, HH:mm") + " CST" : "N/A";
       let provinceStatus = provinceData.data_status || "Unknown";
-      console.log(reports, provinces)
       return (
         <>
           <tr className='provinceRow'>
