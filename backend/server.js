@@ -7,14 +7,16 @@ var bodyParser = require('body-parser')
 var cors = require('cors');
 
 const sql = require('mssql')
+
+// Put your sql config here if you want to run it
 const sqlConfig = {
   user: '',
   password: '',
   database: '',
-  server: '',
+  server: 'localhost',
   options: {
-    encrypt: false, 
-    trustServerCertificate: false 
+    encrypt: false, // for azure
+    trustServerCertificate: false // change to true for local dev / self-signed certs
   }
 }
 

@@ -38,8 +38,7 @@ router.get('/provinces', async (req, res, next) => {
 
 router.post('/testTesult', async (req, res, next) => {
   let {result, ageGroup, date, province} = req.body;
-  console.log({result, ageGroup, date, province})
-
+  
   
   try {
     let pool = await sql.connect(sqlConfig)
@@ -47,7 +46,19 @@ router.post('/testTesult', async (req, res, next) => {
       INSERT INTO dbo.TEST(TESTING_DATE, RESULT, AGE_GROUP_CODE, PROVID) VALUES (${date}, ${result}, ${ageGroup}, ${province});`
 
       await pool.query(sqlQuery)
+      console.log({result, ageGroup, date, province})
       res.status(200)
+  } catch (err) {
+    console.log({ err })
+  }
+})
+
+
+router.get('/testTesult', async (req, res, next) => {
+  try {
+    let pool = await sql.connect(sqlConfig)
+    let query = await pool.query("Select * from dbo.TEST ")
+    res.json({ data: query.recordset })
   } catch (err) {
     console.log({ err })
   }

@@ -1,12 +1,14 @@
 import { MenuItem, Select, TextField } from '@material-ui/core';
 import axios from 'axios';
-import React, { useState } from 'react'
+import moment from 'moment';
+import React, { useEffect, useState } from 'react'
 
 const Form = () => {
   const [result, setResult] = useState('');
   const [ageGroup, setAgeGroup] = useState('');
   const [date, setDate] = useState('');
   const [province, setProvince] = useState('');
+  const [tests, setTests] = useState([]);
 
   const onFormSubmit = (e) => {
     e.preventDefault()
@@ -26,10 +28,24 @@ const Form = () => {
 
     }).then(res => {
       console.log(res);
-
+      setTests([])
     }).catch(error => {
       console.log(error)
     });
+  }
+
+  
+  useEffect(() => {
+    const res = fetch(`/api/testTesult`)
+      .then(res => res.json())
+      .then(res1 => {console.log({res1}); setTests(res1.data) })
+  }, [tests]);
+  
+  const displayTime = (time) => {
+    let date = new Date(time)
+    const format2 = "YYYY-MM-DD"
+    date = moment.utc(date).format(format2);
+    return date;
   }
   return (
     <div className="container-fluid">
@@ -52,7 +68,7 @@ const Form = () => {
                   </Select>
                 </div>
                 <div className="form-group">
-                  <label for="exampleInputPassword1">Postal Code</label>
+                  <label for="exampleInputPassword1">Province</label>
                   <Select
                     className="form-control"
                     value={province}
@@ -104,8 +120,11 @@ const Form = () => {
             </div>
           </div>
         </div>
-
+        
       </div>
+      {tests && tests.map(test => (
+          <div><p>{displayTime(test.TESTING_DATE)} {test.RESULT ? "Positive":"Negative"} {test.PROVID}</p> <br/> </div>
+        ))}
     </div>
   )
 }

@@ -28,11 +28,14 @@ function App() {
   const classes = useStyles();
   return (
     <div className="App">
-      <div class="container-fluid">
-        <div class="row">
+      <nav className="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <a className="navbar-brand" href="index.html">COVID-19 Project</a>
+    </nav>
+      <div className="container-fluid mt-5 px-5">
+        <div className="row">
           <div className="col-xl-6" id="displayMap">
             <div className="card mb-4">
-              <div className="card-header"><i className="fas fa-chart-bar mr-1"></i>By Map</div>
+              <div className="card-header"><i className="fas fa-chart-bar mr-1"></i>Cases by map</div>
               <div className="card-body p-0">
                 <Map />
                 <div id="map-overlay"></div>
@@ -42,7 +45,7 @@ function App() {
 
           <div className="col-xl-6" id="displayMap">
             <div className="card mb-4">
-              <div className="card-header"><i className="fas fa-chart-bar mr-1"></i>By Map</div>
+              <div className="card-header"><i className="fas fa-chart-bar mr-1"></i>Vaccination by map</div>
               <div className="card-body p-0">
                 <VacMap />
                 <div id="map-overlay"></div>
